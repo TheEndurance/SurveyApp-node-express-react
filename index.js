@@ -10,7 +10,7 @@ const passport = require('passport');
 mongoose.connect(keys.mongoURI);
 const app = express();
 // process.env.PORT is used because if we are deploying to Heroku we will set the process.env.PORT
-// from Heroku.  Otherwise if we aren't deployed to some other environment and process.env.PORT is null, we will use the 5000 port.
+// from Heroku.  Otherwise if we aren't deployed to some other environment, we will use the 5000 port.
 const PORT = process.env.PORT || 5000;
 /*
  Order should
