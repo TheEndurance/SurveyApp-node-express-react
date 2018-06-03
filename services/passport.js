@@ -24,7 +24,8 @@ passport.use(
         {
             clientID: keys.googleClientID, //passport requires the clientID and clientSecret for OAuth flow
             clientSecret: keys.googleClientSecret,
-            callbackURL: '/auth/google/callback' //this is the callback URL that is defined when creating a login API on google+ API page
+            callbackURL: '/auth/google/callback', //this is the callback URL that is defined when creating a login API on google+ API page
+            proxy:true
         },
         (accessToken,refreshToken,profile,done)=> { //When a user logs in through google OAuth then we try to find them in our MongoDB
             User.findOne({googleId:profile.id}).then((existingUser)=>{
@@ -36,7 +37,6 @@ passport.use(
                        });
                    }
                 });
-
         }
     )
 );
