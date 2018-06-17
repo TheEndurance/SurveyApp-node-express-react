@@ -11,11 +11,9 @@ passport.serializeUser((user,done)=>{
 });
 
 //Gets the user.id from the cookie and finds that id in mongoDB and returns the user model object
-passport.deserializeUser((id,done)=>{
-   User.findById(id)
-       .then((user)=>{
-           done(null,user);
-       });
+passport.deserializeUser(async(id,done)=>{
+    const user = await User.findById(id);
+    done(null,user);
 });
 
 //Tells passport what strategy to use (like google or facebook or etc)
