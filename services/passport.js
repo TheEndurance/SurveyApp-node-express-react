@@ -27,16 +27,13 @@ passport.use(
             callbackURL: '/auth/google/callback', //this is the callback URL that is defined when creating a login API on google+ API page
             proxy:true
         },
-        (accessToken,refreshToken,profile,done)=> { //When a user logs in through google OAuth then we try to find them in our MongoDB
-            User.findOne({googleId:profile.id}).then((existingUser)=>{
-                   if (existingUser){
-                        done(null,existingUser);
-                   } else {
-                       new User({googleId: profile.id}).save().then((user)=>{
-                           done(null,user);
-                       });
-                   }
-                });
+        async (accessToken,refreshToken,profile,done)=> { //When a user logs in through google OAuth then we try to find them in our MongoDB
+            const existingUser = await User.findOne({googleId:profile.id});
+            if (existingUser){
+                return done(null,existingUser);
+            }
+            const user = await new User({googleId:profille.id}).save();
+            done(null,user);
         }
     )
 );
